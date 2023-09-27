@@ -5,8 +5,8 @@ class MyStack:
     def __init__(self):
         self.stack = []
 
-    def push(self, item):
-        self.stack.append(item)
+    def push(self, element):
+        self.stack.append(element)
 
     def pop(self):
         try:
@@ -40,8 +40,8 @@ class MyQueue:
     def __init__(self):
         self.queue = []
 
-    def push(self, item):
-        self.queue.append(item)
+    def push(self, element):
+        self.queue.append(element)
 
     def pop(self):
         try:
