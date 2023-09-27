@@ -8,9 +8,9 @@ class MyStack:
     def push(self, element):
         self.stack.append(element)
 
-    def pop(self):
+    def pop(self) -> int:
         try:
-            self.stack.pop()
+            return self.stack.pop()
         except Exception as e:
             print("The MyStack is empty. No more pop operations can be performed.")
             raise e
@@ -43,9 +43,9 @@ class MyQueue:
     def push(self, element):
         self.queue.append(element)
 
-    def pop(self):
+    def pop(self) -> int:
         try:
-            self.queue.pop(0)
+            return self.queue.pop(0)
         except Exception as e:
             print("The MyQueue is empty. No more pop operations can be performed.")
             raise e

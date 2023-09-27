@@ -33,15 +33,15 @@ def test_stack():
     assert my_stack.is_empty() is False
     assert my_stack.min() == 1
     assert my_stack.max() == 3
-    my_stack.pop()
+    assert my_stack.pop() == 3
     assert my_stack.__str__() == "2 -> 1"
     assert my_stack.min() == 1
     assert my_stack.max() == 2
-    my_stack.pop()
+    assert my_stack.pop() == 2
     assert my_stack.__str__() == "1"
     assert my_stack.min() == 1
     assert my_stack.max() == 1
-    my_stack.pop()
+    assert my_stack.pop() == 1
     assert my_stack.__str__() == ""
     assert my_stack.is_empty() is True
 
@@ -61,15 +61,15 @@ def test_queue():
     assert my_queue.is_empty() is False
     assert my_queue.min() == 1
     assert my_queue.max() == 3
-    my_queue.pop()
+    assert my_queue.pop() == 1
     assert my_queue.__str__() == "2 -> 3"
     assert my_queue.min() == 2
     assert my_queue.max() == 3
-    my_queue.pop()
+    assert my_queue.pop() == 2
     assert my_queue.__str__() == "3"
     assert my_queue.min() == 3
     assert my_queue.max() == 3
-    my_queue.pop()
+    assert my_queue.pop() == 3
     assert my_queue.__str__() == ""
     assert my_queue.is_empty() is True
 
