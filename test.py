@@ -47,6 +47,8 @@ def test_stack():
 
     with pytest.raises(Exception):
         my_stack.pop()
+    assert my_stack.min() is None
+    assert my_stack.max() is None
 
 
 def test_queue():
