@@ -93,7 +93,6 @@ def test_queue(capfd):
     assert my_queue.max() is None
 
 
-
 def test_transactions():
     transactions = Transactions()
     transactions.add_transaction(67686, "deposit", 5000, "Monthly Allowance")
