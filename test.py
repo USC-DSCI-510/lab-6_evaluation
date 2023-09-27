@@ -29,28 +29,20 @@ def test_stack(capfd):
     my_stack.push(1)
     my_stack.push(2)
     my_stack.push(3)
-    print(my_stack)
-    out, _ = capfd.readouterr()
-    assert out == "3 -> 2 -> 1\n"
+    assert my_stack.__str__() == "3 -> 2 -> 1"
     assert my_stack.is_empty() is False
     assert my_stack.min() == 1
     assert my_stack.max() == 3
     my_stack.pop()
-    print(my_stack)
-    out, _ = capfd.readouterr()
-    assert out == "2 -> 1\n"
+    assert my_stack.__str__() == "2 -> 1"
     assert my_stack.min() == 1
     assert my_stack.max() == 2
     my_stack.pop()
-    print(my_stack)
-    out, _ = capfd.readouterr()
-    assert out == "1\n"
+    assert my_stack.__str__() == "1"
     assert my_stack.min() == 1
     assert my_stack.max() == 1
     my_stack.pop()
-    print(my_stack)
-    out, _ = capfd.readouterr()
-    assert out == "\n"
+    assert my_stack.__str__() == ""
     assert my_stack.is_empty() is True
 
     with pytest.raises(Exception):
@@ -63,28 +55,20 @@ def test_queue(capfd):
     my_queue.push(1)
     my_queue.push(2)
     my_queue.push(3)
-    print(my_queue)
-    out, _ = capfd.readouterr()
-    assert out == "1 -> 2 -> 3\n"
+    assert my_queue.__str__() == "1 -> 2 -> 3"
     assert my_queue.is_empty() is False
     assert my_queue.min() == 1
     assert my_queue.max() == 3
     my_queue.pop()
-    print(my_queue)
-    out, _ = capfd.readouterr()
-    assert out == "2 -> 3\n"
+    assert my_queue.__str__() == "2 -> 3"
     assert my_queue.min() == 2
     assert my_queue.max() == 3
     my_queue.pop()
-    print(my_queue)
-    out, _ = capfd.readouterr()
-    assert out == "3\n"
+    assert my_queue.__str__() == "3"
     assert my_queue.min() == 3
     assert my_queue.max() == 3
     my_queue.pop()
-    print(my_queue)
-    out, _ = capfd.readouterr()
-    assert out == "\n"
+    assert my_queue.__str__() == ""
     assert my_queue.is_empty() is True
 
     with pytest.raises(Exception):
@@ -98,6 +82,9 @@ def test_transactions():
     transactions.add_transaction(67686, "deposit", 5000, "Monthly Allowance")
     transactions.add_transaction(67687, "withdrawal", 200, "Phone bill")
     transactions.add_transaction(67688, "deposit", 1234.56, "Salary")
+
+    with pytest.raises(Exception):
+        transactions.add_transaction(67688, "deposit", 1234.56, "Salary")
 
     assert transactions.get_transaction(67686) == {
         "transaction_type": "deposit",
