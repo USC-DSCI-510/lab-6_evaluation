@@ -23,7 +23,7 @@ except Exception:
 # pytest cases
 
 
-def test_stack(capfd):
+def test_stack():
     my_stack = MyStack()
     assert my_stack.is_empty() is True
     my_stack.push(1)
@@ -49,7 +49,7 @@ def test_stack(capfd):
         my_stack.pop()
 
 
-def test_queue(capfd):
+def test_queue():
     my_queue = MyQueue()
     assert my_queue.is_empty() is True
     my_queue.push(1)
