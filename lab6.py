@@ -16,13 +16,15 @@ class MyStack:
             raise e
 
     def min(self) -> int:
-        return min(self.stack)
+        return min(self.stack) if not self.is_empty() else None
 
     def max(self) -> int:
-        return max(self.stack)
+        return max(self.stack) if not self.is_empty() else None
 
     def __str__(self) -> str:
         ans = ""
+        if self.is_empty():
+            return ans
         for i in range(len(self.stack) - 1, -1, -1):
             if i == 0:
                 ans += str(self.stack[i])
@@ -49,13 +51,15 @@ class MyQueue:
             raise e
 
     def min(self) -> int:
-        return min(self.queue)
+        return min(self.queue) if not self.is_empty() else None
 
     def max(self) -> int:
-        return max(self.queue)
+        return max(self.queue) if not self.is_empty() else None
 
     def __str__(self) -> str:
         ans = ""
+        if self.is_empty():
+            return ans
         for i in range(0, len(self.queue)):
             if i == len(self.queue) - 1:
                 ans += str(self.queue[i])
