@@ -1,0 +1,99 @@
+name: Master Autograder Workflow
+
+on: 
+  workflow_dispatch:
+
+permissions:
+  checks: write
+  actions: read
+  contents: read
+
+jobs:
+    auto_grade:
+        runs-on: ubuntu-latest
+        timeout-minutes: 4
+        env:
+            GITHUB_TOKEN: ${{ secrets.CLASSROOM_GITHUB_TOKEN }}
+            EVALUATION_REPO: ${{ vars.EVALUATION_REPO }}
+            SUBMISSION_DIR: ${{ vars.SUBMISSION_DIR }}
+            lab_number: 6
+
+        steps:
+            - name: Set Current Date and Time
+              run: |
+                echo "CURRENT_DATETIME=$(date +"%Y-%m-%d_%H-%M-%S")" >> "$GITHUB_ENV"
+        
+            - name: Install GitHub Classroom CLI  
+              run: gh extension install github/gh-classroom
+
+            - name: GitHub CLI authentication status  
+              run: gh auth status
+
+            - name: Clone Evaluation Repo
+              run: gh repo clone USC-DSCI-510/$EVALUATION_REPO
+
+            - name: Read Student Roster
+              run: |
+                mkdir $SUBMISSION_DIR
+                # Copy student_roster to submission directory
+                cp $EVALUATION_REPO/.github/workflows/student_roster.txt  $SUBMISSION_DIR/student_roster.txt
+
+            - name: Clone Student Repositories
+              run: |
+                cd "$SUBMISSION_DIR"
+              
+                for username in $(cat student_roster.txt); do
+                  username=$(echo "$username" | tr -d '[:space:]')
+                  repo_name="USC-DSCI-510/lab-$lab_number-$username"
+
+                  # Clone the repository for the current student
+                  gh repo clone $repo_name -- --depth 1
+                done
+                
+                cd ..
+              timeout-minutes: 2
+            
+            - name: Set Git Configuration
+              run: |
+                git config --global user.email "actions@github.com"
+                git config --global user.name "GitHub Actions"
+
+            - name: Copy Grading Files and Create Pull Request
+              run: |
+                cd "$SUBMISSION_DIR"
+
+                for student_repo in ./*; do
+                  if [ -d "$student_repo" ]; then
+                    repo_name=$(basename "$student_repo")
+                    branch_name="auto-grader-test-$CURRENT_DATETIME"  # Construct the branch name
+            
+                    cd "$student_repo"
+                    
+                    git checkout -b "$branch_name" 
+                    
+                    # Copy necessary files
+                    cp ../../$EVALUATION_REPO/requirements.txt .
+                    cp ../../$EVALUATION_REPO/.flake8 .
+                    cp ../../$EVALUATION_REPO/.github/workflows/classroom.yml ./.github/workflows/classroom.yml
+                    cp -r ../../$EVALUATION_REPO/tests .
+
+                    # Check if test.py exists before removing it
+                    if [ -e test.py ]; then
+                      # Remove test.py
+                      rm test.py
+                    fi
+                    
+                    # Commit changes and push changes
+                    git add .
+                    git commit -m "Run the Autograder Bot"
+                    git push https://$GITHUB_TOKEN@github.com/USC-DSCI-510/$repo_name.git "$branch_name"
+                    
+                    cd ..
+                  fi
+                done
+              timeout-minutes: 3
+
+            - name: Cleanup Cloned Repositories
+              run: |
+                rm -rf */
+            

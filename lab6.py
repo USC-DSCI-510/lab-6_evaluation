@@ -83,12 +83,10 @@ class Transactions:
         transaction_details: str,
     ):
         if transaction_id in self.transaction_dict:
-            raise Exception('Duplicated transaction_id')
+            raise Exception("Duplicated transaction_id")
         self.transaction_dict[transaction_id]["transaction_type"] = transaction_type
         self.transaction_dict[transaction_id]["transaction_amount"] = transaction_amount
-        self.transaction_dict[transaction_id][
-            "transaction_details"
-        ] = transaction_details
+        self.transaction_dict[transaction_id]["transaction_details"] = transaction_details
 
     def get_transaction(self, transaction_id: int) -> dict:
         if transaction_id in self.transaction_dict.keys():
