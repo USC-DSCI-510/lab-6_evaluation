@@ -73,9 +73,12 @@ jobs:
                     
                     # Copy necessary files
                     cp ../../$EVALUATION_REPO/requirements.txt .
-                    cp ../../$EVALUATION_REPO/.flake8 .
                     cp ../../$EVALUATION_REPO/.github/workflows/classroom.yml ./.github/workflows/classroom.yml
                     cp -r ../../$EVALUATION_REPO/tests .
+
+                    cp ../../$EVALUATION_REPO/.flake8 .
+                    cp -r ../../$EVALUATION_REPO/flake8_plugins .
+                    cp ../../$EVALUATION_REPO/setup.py .
 
                     # Check if test.py exists before removing it
                     if [ -e test.py ]; then
