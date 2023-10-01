@@ -6,6 +6,8 @@ class MyStack:
         self.stack = []
 
     def push(self, element):
+        if not isinstance(element, int) or isinstance(element, bool):
+            raise ValueError
         self.stack.append(element)
 
     def pop(self) -> int:
@@ -41,6 +43,8 @@ class MyQueue:
         self.queue = []
 
     def push(self, element):
+        if not isinstance(element, int) or isinstance(element, bool):
+            raise ValueError
         self.queue.append(element)
 
     def pop(self) -> int:
