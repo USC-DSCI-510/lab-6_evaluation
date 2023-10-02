@@ -16,7 +16,7 @@ jobs:
     run-auto-grade:
         name: Autograding
         runs-on: ubuntu-latest
-        timeout-minutes: 3
+        timeout-minutes: 2
 
         env:
           lab_number: 6
@@ -51,6 +51,7 @@ jobs:
               id: bonus_pep8_linter_check_flake8
               run: |
                 flake8 "lab$lab_number.py"
+                echo "::warning title=Lint Checks with Flake8::Click the above link to view Linting logs"
               continue-on-error: true
 
             - name: Set Bonus Points
@@ -78,7 +79,7 @@ jobs:
                 # Saving to the log file
                 pytest -v --no-header > output.log
               continue-on-error: true
-              timeout-minutes: 1
+              timeout-minutes: 0.5
 
             - name: Extract Marks from logs
               id: marks
@@ -111,7 +112,7 @@ jobs:
     generate-report:
         name: Grading Report Generation
         runs-on: ubuntu-latest
-        timeout-minutes: 1
+        timeout-minutes: 0.5
 
         needs: run-auto-grade
     
