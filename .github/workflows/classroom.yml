@@ -65,6 +65,13 @@ jobs:
                 echo "bonus_points_gained=$bonus_points" >> "$GITHUB_ENV"
               continue-on-error: true
 
+            - name: Run the Grading Script
+              run: | 
+                pytest -v --no-header
+                echo "::warning title=Run the Grading Script::Click the above link to view Test Suite Logs & Cases Summary"
+              continue-on-error: true
+              timeout-minutes: 1
+
             - name: Save test logs to file
               id: set_pytest_log
               run: |
@@ -78,12 +85,12 @@ jobs:
               run: |
                 pytest_logs=$(cat output.log | sed 's/\x1B\[[0-9;]*[JKmsu]//g')
 
-                echo "test_case_summary<<EOF" >> $GITHUB_ENV
-                echo "$pytest_logs" >> $GITHUB_ENV
-                echo "EOF" >> $GITHUB_ENV
+                # echo "test_case_summary<<EOF" >> $GITHUB_ENV
+                # echo "$pytest_logs" >> $GITHUB_ENV
+                # echo "EOF" >> $GITHUB_ENV
 
-                echo "## Test Cases Summary" >> $GITHUB_STEP_SUMMARY
-                echo "$pytest_logs" >> $GITHUB_STEP_SUMMARY
+                # echo "## Test Cases Summary" >> $GITHUB_STEP_SUMMARY
+                # echo "$pytest_logs" >> $GITHUB_STEP_SUMMARY
   
                 max_points_possible=$(echo "$pytest_logs" | grep -oP "collected \K\d+")
       
@@ -166,8 +173,8 @@ jobs:
                 echo "|--------------------|-------------------------|------------------------------|" >> $GITHUB_STEP_SUMMARY
                 echo "| Total Points       | $total_points_obtained  | $scaled_max_points_possible  |" >> $GITHUB_STEP_SUMMARY
     
-                echo "> Detailed Feedback - Summary of Test Cases" >> $GITHUB_STEP_SUMMARY
-                echo "> [View Logs](https://github.com/$name_with_owner/actions/runs/$GITHUB_RUN_ID)" >> $GITHUB_STEP_SUMMARY
+                echo "#### Detailed Feedback - Summary of Test Cases" >> $GITHUB_STEP_SUMMARY
+                echo " Click on _Run the Grading Script_ under **Annotations**" >> $GITHUB_STEP_SUMMARY
                 
                 echo "### Student Metadata" >> $GITHUB_STEP_SUMMARY
                 echo "| Name                 | Description            |" >> $GITHUB_STEP_SUMMARY
