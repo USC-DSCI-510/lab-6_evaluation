@@ -51,7 +51,7 @@ jobs:
               id: bonus_pep8_linter_check_flake8
               run: |
                 flake8 "lab$lab_number.py"
-                echo "::error title=Lint Checks with Flake8::Click the above link to view Linting logs"
+                echo "::warning title=Lint Checks with Flake8::Click the above link to view Linting logs"
               continue-on-error: true
 
             - name: Set Bonus Points
@@ -71,9 +71,9 @@ jobs:
                 # Saving to the log file
                 pytest -v --no-header > output.log
                 cat output.log
-                echo "::error title=Test Suite Logs::Click the above link to view Test Suite Logs & Cases Summary"
+                echo "::warning title=Test Suite Logs::Click the above link to view Test Suite Logs & Cases Summary"
               continue-on-error: true
-              timeout-minutes: 0.5
+              timeout-minutes: 1
 
             - name: Extract Marks from logs
               id: marks
