@@ -51,7 +51,7 @@ jobs:
               id: bonus_pep8_linter_check_flake8
               run: |
                 flake8 "lab$lab_number.py"
-                echo "::warning title=Lint Checks with Flake8::Click the above link to view Linting logs"
+                echo "::error title=Lint Checks with Flake8::Click the above link to view Linting logs"
               continue-on-error: true
 
             - name: Set Bonus Points
@@ -69,7 +69,6 @@ jobs:
             - name: Run the Grading Script
               run: | 
                 pytest -v --no-header
-                echo "::warning title=Run the Grading Script::Click the above link to view Test Suite Logs & Cases Summary"
               continue-on-error: true
               timeout-minutes: 1
 
@@ -78,6 +77,8 @@ jobs:
               run: |
                 # Saving to the log file
                 pytest -v --no-header > output.log
+                cat output.log
+                echo "::error title=Test Suite Logs::Click the above link to view Test Suite Logs & Cases Summary"
               continue-on-error: true
               timeout-minutes: 0.5
 
@@ -174,6 +175,9 @@ jobs:
                 echo "|--------------------|-------------------------|------------------------------|" >> $GITHUB_STEP_SUMMARY
                 echo "| Total Points       | $total_points_obtained  | $scaled_max_points_possible  |" >> $GITHUB_STEP_SUMMARY
     
+                echo "#### Detailed Feedback - Linting Checks Result" >> $GITHUB_STEP_SUMMARY
+                echo " Click on _Lint with Flake8_ step under **Autograding** job" >> $GITHUB_STEP_SUMMARY
+
                 echo "#### Detailed Feedback - Summary of Test Cases" >> $GITHUB_STEP_SUMMARY
                 echo " Click on _Run the Grading Script_ step under **Autograding** job" >> $GITHUB_STEP_SUMMARY
                 
