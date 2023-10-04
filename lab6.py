@@ -78,6 +78,7 @@ class MyQueue:
 class Transactions:
     def __init__(self):
         self.transaction_dict = defaultdict(dict)
+        self.transaction_types_valid = {"deposit", "withdrawal"}
 
     def add_transaction(
         self,
@@ -86,8 +87,15 @@ class Transactions:
         transaction_amount: float,
         transaction_details: str,
     ):
+        if not isinstance(transaction_id, int):
+            raise Exception("transaction_id must be an int")
+
         if transaction_id in self.transaction_dict:
             raise Exception("Duplicated transaction_id")
+
+        if transaction_type not in self.transaction_types_valid:
+            raise Exception("Invalid transaction type")
+
         self.transaction_dict[transaction_id]["transaction_type"] = transaction_type
         self.transaction_dict[transaction_id]["transaction_amount"] = transaction_amount
         self.transaction_dict[transaction_id]["transaction_details"] = transaction_details
