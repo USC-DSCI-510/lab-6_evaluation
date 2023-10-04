@@ -164,6 +164,22 @@ def test_get_all_transactions():
     }
 
 
+@pytest.mark.timeout(0.02)
+def test_valid_transaction_types():
+    transactions = Transactions()
+    with pytest.raises(Exception):
+        transactions.add_transaction(1, "DEPOSIT", 100, "Salary")
+    with pytest.raises(Exception):
+        transactions.add_transaction(2, "WITHDRAWAL", 50, "Groceries")
+
+
+@pytest.mark.timeout(0.02)
+def test_valid_transaction_id():
+    transactions = Transactions()
+    with pytest.raises(Exception):
+        transactions.add_transaction("g89678gfBH6", "deposit", 100, "Salary")
+
+
 @pytest.mark.timeout(0.05)
 def test_transaction_system():
     # Initialize components
@@ -234,7 +250,7 @@ def test_transaction_system_advanced():
         transactions.add_transaction(i, "deposit", i * 10, f"Transaction {i}")
 
     with pytest.raises(Exception):
-        transactions.add_transaction(i, "withdrawal", "Groceries", 50)
+        transactions.add_transaction(i, "withdrawal", 50, "Groceries")
 
     # Push transaction IDs to stack and queue
     for transaction_id in transactions_id_list:
