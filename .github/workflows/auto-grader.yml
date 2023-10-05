@@ -76,8 +76,10 @@ jobs:
                     cp ../../$EVALUATION_REPO/.github/workflows/classroom.yml ./.github/workflows/classroom.yml
                     cp -r ../../$EVALUATION_REPO/tests .
 
+                    # Copy the Linter configuration file
+                    cp ../../$EVALUATION_REPO/.flake8 .
+
                     # Add custom flake8 plugins
-                    # cp ../../$EVALUATION_REPO/.flake8 .
                     # cp -r ../../$EVALUATION_REPO/flake8_plugins .
 
                     # Check if test.py exists before removing it
