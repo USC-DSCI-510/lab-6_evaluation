@@ -26,6 +26,11 @@ jobs:
             - name: Install GitHub Classroom CLI  
               run: gh extension install github/gh-classroom
 
+            - name: Set Git Configuration
+              run: |
+                git config --global user.email "actions@github.com"
+                git config --global user.name "GitHub Actions"
+
             - name: GitHub CLI authentication status  
               run: gh auth status
 
@@ -52,11 +57,6 @@ jobs:
                 
                 cd ..
               timeout-minutes: 2
-            
-            - name: Set Git Configuration
-              run: |
-                git config --global user.email "actions@github.com"
-                git config --global user.name "GitHub Actions"
 
             - name: Copy Grading Files and Create Pull Request
               run: |
