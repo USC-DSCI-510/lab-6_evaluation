@@ -170,7 +170,7 @@ jobs:
                 echo "Click on _Lint with Flake8_ step under **Autograding** job" >> $GITHUB_STEP_SUMMARY
 
                 echo "#### Detailed Feedback - Summary of Test Cases" >> $GITHUB_STEP_SUMMARY
-                echo "Click on _Run the Grading Script_ step under **Autograding** job" >> $GITHUB_STEP_SUMMARY
+                echo "Click on _Test Suite Logs_ step under **Autograding** job" >> $GITHUB_STEP_SUMMARY
                 
                 echo "### Student Metadata" >> $GITHUB_STEP_SUMMARY
                 echo "| Name                 | Description            |" >> $GITHUB_STEP_SUMMARY
