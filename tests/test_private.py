@@ -244,7 +244,7 @@ def test_transaction_system_advanced():
     transactions = Transactions()
 
     # Add a large number of transactions to test performance
-    transactions_id_list = range(1000, 1100)
+    transactions_id_list = range(1000, 2000)
     k = len(transactions_id_list)
     for i in transactions_id_list:
         transactions.add_transaction(i, "deposit", i * 10, f"Transaction {i}")
@@ -263,8 +263,14 @@ def test_transaction_system_advanced():
 
     # Pop all transactions and check if they are in the correct order
     for i in range(k):
-        assert stack.pop() == transactions_id_list[k - i - 1]
-        assert queue.pop() == transactions_id_list[i]
+        stack_popped = stack.pop()
+        queue_popped = queue.pop()
+
+        # Check if popped IDs are different
+        assert stack_popped != queue_popped
+
+        assert stack_popped == transactions_id_list[k - i - 1]
+        assert queue_popped == transactions_id_list[i]
 
     # Check if stack and queue are empty
     assert stack.is_empty()
