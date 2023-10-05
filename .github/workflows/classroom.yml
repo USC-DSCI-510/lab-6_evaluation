@@ -70,6 +70,11 @@ jobs:
               run: | 
                 # Saving to the log file
                 pytest -v --no-header > output.log
+              continue-on-error: true
+              timeout-minutes: 1
+
+            - name: Test Suite Logs
+              run: | 
                 cat output.log
                 echo "::warning title=Test Suite Logs::Click the above link to view Test Suite Logs & Cases Summary"
               continue-on-error: true
